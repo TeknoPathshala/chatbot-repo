@@ -11,15 +11,21 @@ pipeline {
         
         stage('Build') {
             steps {
-                // Install dependencies and perform any necessary build steps
-                sh 'pip install Flask'
+                // Install Python and create a virtual environment
+                sh 'sudo apt-get update'
+                sh 'sudo apt-get install python3 python3-venv python3-pip -y'
+                sh 'python3 -m venv venv' // Create a virtual environment
+                sh 'source venv/bin/activate' // Activate the virtual environment
+
+                // Use the full path to pip to install Flask
+                sh '/usr/bin/pip install Flask'  // Replace with the correct path to pip
             }
         }
         
         stage('Deploy') {
             steps {
-                // Deploy the chatbot to your server
-                sh 'python chatbot.py &'
+                // Run the chatbot within the virtual environment
+                sh 'source venv/bin/activate && python chatbot.py &'
             }
         }
     }
