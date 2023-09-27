@@ -15,7 +15,11 @@ pipeline {
                 sh 'sudo apt-get update'
                 sh 'sudo apt-get install python3 python3-venv python3-pip -y'
                 sh 'python3 -m venv venv' // Create a virtual environment
-                sh 'source venv/bin/activate' // Activate the virtual environment
+
+                // Activate the virtual environment using the appropriate command for your shell
+                // For Bash, use 'source venv/bin/activate'
+                // For sh, use '. venv/bin/activate'
+                sh '. venv/bin/activate'
 
                 // Use the full path to pip to install Flask
                 sh '/usr/bin/pip install Flask'  // Replace with the correct path to pip
@@ -25,7 +29,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 // Run the chatbot within the virtual environment
-                sh 'source venv/bin/activate && python chatbot.py &'
+                sh 'python chatbot.py &'
             }
         }
     }
