@@ -12,8 +12,6 @@ pipeline {
         stage('Build') {
             steps {
                 // Install Python and create a virtual environment
-                sh 'sudo apt-get update'
-                sh 'sudo apt-get install python3 python3-venv python3-pip -y'
                 sh 'python3 -m venv venv' // Create a virtual environment
 
                 // Activate the virtual environment and store the path in an environment variable
