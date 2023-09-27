@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Checkout') {
             steps {
@@ -8,7 +8,7 @@ pipeline {
                 checkout scm
             }
         }
-        
+
         stage('Build') {
             steps {
                 // Install Python and create a virtual environment
@@ -21,7 +21,7 @@ pipeline {
                 sh '/usr/bin/pip install Flask'  // Replace with the correct path to pip
             }
         }
-        
+
         stage('Deploy') {
             steps {
                 // Run the chatbot within the virtual environment
