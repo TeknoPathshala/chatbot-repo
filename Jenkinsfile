@@ -16,29 +16,23 @@ pipeline {
                 sh 'sudo apt-get install python3 python3-venv python3-pip -y'
                 sh 'python3 -m venv venv' // Create a virtual environment
 
-                // Activate the virtual environment
-                sh '. venv/bin/activate'
+                // Activate the virtual environment and store the path in an environment variable
+                script {
+                    def venvPath = "${WORKSPACE}/venv/bin"
+                    env.PATH = "${venvPath}:${env.PATH}"
+                }
 
                 // Install Flask and other dependencies (if any)
                 sh '/usr/bin/pip install Flask'  // Replace with the correct path to pip
 
-                // Additional commands for dependency installation if needed
-                // sh '/usr/bin/pip install package-name'
-            }
+                }
         }
 
         stage('Deploy') {
             steps {
-                // Run the chatbot within the virtual environment
-                sh 'source venv/bin/activate && python chatbot.py &'
+                // Run the chatbot within the virtual environment in the background using nohup
+                sh 'nohup python chatbot.py > chatbot.log 2>&1 &'
             }
-        }
-    }
-
-    post {
-        always {
-            // Clean up the virtual environment
-            sh 'deactivate' // Deactivate the virtual environment
         }
     }
 }
