@@ -38,4 +38,7 @@ pipeline {
     post {
         always {
             // Clean up the virtual environment
-            sh 'de
+            sh 'deactivate' // Deactivate the virtual environment
+        }
+    }
+}
